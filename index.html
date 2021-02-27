@@ -43,9 +43,15 @@
                             <strong class="text-success">合計金額</strong>
                             <strong class="text-success" id="total">0</strong>
                         </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <strong class="text-success">お釣り</strong>
+                            <strong class="text-success" id="change">0</strong>
+                        </li>
                     </ul>
-
-
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="payment">
+                        <button class="btn btn-secondary" onclick="clacChange()">お支払</button>
+                    </div>
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">商品一覧</h4>
@@ -75,20 +81,22 @@
                     function(menu_list) {
                         let out = '';
                         for (var idx in menu_list) {
-                            out += '<div class="col">';
-                            out += '<div class="card mb-4 shadow-sm">';
-                            out += '<div class="card-header">';
-                            out += '<h4 class="my-0 fw-normal">' + menu_list[idx].name + '</h4>';
-                            out += '</div>';
-                            out += '<div class="card-body">';
-                            out += '<h1 class="card-title pricing-card-title">￥' + menu_list[idx].price + ' </h1>';
-                            out += '<ul class="list-unstyled mt-3 mb-4">';
-                            out += '<li>' + menu_list[idx].remarks + '</li>';
-                            out += '</ul>';
-                            out += '<button type="button" class="w-100 btn btn-lg btn-primary" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\')">追加</button>';
-                            out += '</div>';
-                            out += '</div>';
-                            out += '</div>';
+                            if (menu_list[idx].flg == 0) {
+                                out += '<div class="col">';
+                                out += '<div class="card mb-4 shadow-sm">';
+                                out += '<div class="card-header">';
+                                out += '<h4 class="my-0 fw-normal">' + menu_list[idx].name + '</h4>';
+                                out += '</div>';
+                                out += '<div class="card-body">';
+                                out += '<h1 class="card-title pricing-card-title">￥' + menu_list[idx].price + ' </h1>';
+                                out += '<ul class="list-unstyled mt-3 mb-4">';
+                                out += '<li>' + menu_list[idx].remarks + '</li>';
+                                out += '</ul>';
+                                out += '<button type="button" class="w-100 btn btn-lg btn-primary" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\')">追加</button>';
+                                out += '</div>';
+                                out += '</div>';
+                                out += '</div>';
+                            }
                         }
                         $("#menu_list_card").html(out);
                     },
@@ -119,8 +127,13 @@
             $(".price").each(function(idx, elm) {
                 total += Number($(elm).html());
             });
-            console.log(total)
             $("#total").html("￥" + total);
+        }
+
+        function clacChange() {
+            console.log($("#payment").val());
+            console.log($("#payment").val() - Number($("#total").html().slice(1, $("#total").html().length)));
+            $("#change").html("￥" + String($("#payment").val() - Number($("#total").html().slice(1, $("#total").html().length))));
         }
     </script>
 </body>
