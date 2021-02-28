@@ -24,22 +24,25 @@
                             <span class="text-muted">会計</span>
                             <span class="badge bg-secondary" id="counter">0</span>
                         </h4>
-                        <ul class="list-group mb-3" id="cart">
-                        </ul>
-                        <ul class="list-group mb-3">
-                            <li class="list-group-item d-flex justify-content-between">
-                                <strong class="text-success">合計金額</strong>
-                                <strong class="text-success" id="total">0</strong>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <strong class="text-danger">お釣り</strong>
-                                <strong class="text-danger" id="change">0</strong>
-                            </li>
-                        </ul>
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="payment">
-                            <button class="btn btn-success" onclick="calcChange()"><strong>お支払</strong></button>
-                        </div>
+                        <form method="post" action="https://script.google.com/macros/s/AKfycby9wrxhZxkGXwCE6yy06yx3-IHFvT1zp9DXu2JhPTBi6mxnzhFUJV3f2A/exec">
+                            <ul class="list-group mb-3" id="cart">
+                            </ul>
+                            <ul class="list-group mb-3">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <strong class="text-success">合計金額</strong>
+                                    <strong class="text-success" id="total">0</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <strong class="text-danger">お釣り</strong>
+                                    <strong class="text-danger" id="change">0</strong>
+                                </li>
+                            </ul>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="payment">
+                                <button class="btn btn-success" type="button" onclick="calcChange()"><strong>お支払</strong></button>
+                                <button class="btn btn-primary" type="submit"><strong>完了</strong></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-7 col-lg-8">
@@ -69,9 +72,9 @@
                             if (menu_list[idx].flg == 0) {
                                 out += '<div class="col">';
                                 out += '<div class="card mb-4 shadow-sm">';
-                                if (menu_list[idx].id > 30000) {
+                                if (menu_list[idx].menu_id > 30000) {
                                     out += '<div class="card-header text-white bg-primary">';
-                                } else if (menu_list[idx].id > 20000) {
+                                } else if (menu_list[idx].menu_id > 20000) {
                                     out += '<div class="card-header text-white bg-success">';
                                 } else {
                                     out += '<div class="card-header text-white bg-danger">';
@@ -83,7 +86,7 @@
                                 out += '<ul class="list-unstyled mt-3 mb-4">';
                                 out += '<li>' + menu_list[idx].remarks + '</li>';
                                 out += '</ul>';
-                                out += '<button type="button" class="w-100 btn btn-lg btn-warning" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\')"><strong>カートに入れる</strong></button>';
+                                out += '<button type="button" class="w-100 btn btn-lg btn-warning" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\',\'' + menu_list[idx].menu_id + '\')"><strong>カートに入れる</strong></button>';
                                 out += '</div>';
                                 out += '</div>';
                                 out += '</div>';
@@ -97,7 +100,7 @@
                 );
         });
 
-        function addCart(name, price) {
+        function addCart(name, price, menu_id) {
             let out = $("#cart").html();
             out += '<li class="list-group-item d-flex justify-content-between lh-sm">';
             out += '<div>';
@@ -107,6 +110,7 @@
             out += '<h6 class="my-0">' + name + '</h6>';
             out += '</div>';
             out += '<span class="text-muted price">' + price + '</span>';
+            out += '<input type="hidden" name="menu_id" value="' + menu_id + '">'
             out += '</li>';
             $("#cart").html(out);
             calcTotal();
@@ -129,10 +133,10 @@
         }
 
         function showtime() {
-            var today = new Date();
+            let today = new Date();
             $weekday = ['日', '月', '火', '水', '木', '金', '土'];
             month = today.getMonth() + 1;
-            $('#datetime').html(month + "月" + today.getDate() + "日(" + $weekday[today.getDay()] + ")" + today.getHours() + ":" + ('0' + today.getMinutes()).slice(-2) + ":" + ('0' + today.getSeconds()).slice(-2));
+            $('#datetime').html(today.getFullYear() + "年" + ('0' + month).slice(-2) + "月" + ('0' + today.getDate()).slice(-2) + "日(" + $weekday[today.getDay()] + ")" + today.getHours() + ":" + ('0' + today.getMinutes()).slice(-2) + ":" + ('0' + today.getSeconds()).slice(-2));
         }
         setInterval(showtime, 1000);
     </script>
