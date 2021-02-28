@@ -21,7 +21,9 @@
         <main>
             <div class="py-2 text-center">
                 <h2>オギノエンファーム</h2>
+                <div id="datetime"></div>
             </div>
+
             <div class="row g-3">
                 <div class="col-md-5 col-lg-4 order-md-last">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -124,6 +126,7 @@
                 total += Number($(elm).html());
             });
             $("#total").html("￥" + total);
+            clacChange();
         }
 
         function clacChange() {
@@ -131,6 +134,14 @@
             console.log($("#payment").val() - Number($("#total").html().slice(1, $("#total").html().length)));
             $("#change").html("￥" + String($("#payment").val() - Number($("#total").html().slice(1, $("#total").html().length))));
         }
+
+        function showtime() {
+            var today = new Date();
+            $weekday = ['日', '月', '火', '水', '木', '金', '土'];
+            month = today.getMonth() + 1;
+            $('#datetime').html(month + "月" + today.getDate() + "日(" + $weekday[today.getDay()] + ")" + today.getHours() + ":" + ('0' + today.getMinutes()).slice(-2) + ":" + ('0' + today.getSeconds()).slice(-2));
+        }
+        setInterval(showtime, 1000);
     </script>
 </body>
 
