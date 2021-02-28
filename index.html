@@ -37,7 +37,7 @@
                     </ul>
                     <div class="input-group">
                         <input type="number" class="form-control" id="payment">
-                        <button class="btn btn-success" onclick="clacChange()"><strong>お支払</strong></button>
+                        <button class="btn btn-success" onclick="calcChange()"><strong>お支払</strong></button>
                     </div>
                 </div>
                 <div class="col-md-7 col-lg-8">
@@ -117,10 +117,10 @@
                 total += Number($(elm).html());
             });
             $("#total").html("￥" + total);
-            clacChange();
+            calcChange();
         }
 
-        function clacChange() {
+        function calcChange() {
             console.log($("#payment").val());
             console.log($("#payment").val() - Number($("#total").html().slice(1, $("#total").html().length)));
             $("#change").html("￥" + String($("#payment").val() - Number($("#total").html().slice(1, $("#total").html().length))));
