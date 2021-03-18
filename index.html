@@ -47,7 +47,9 @@
                 </div>
                 <div class="col-md-7 col-lg-8">
                     <h4 class="mb-3">商品一覧</h4>
-                    <div class="row row-cols-1 row-cols-md-3 mb-3 text-center" id="menu_list_card">
+                    <ul id="menuTabs" class="nav nav-pills nav-fill">
+                    </ul>
+                    <div class="tab-content p-2 " id="tabContents">
                     </div>
                 </div>
             </div>
@@ -67,32 +69,83 @@
                 })
                 .then(
                     function(menu_list) {
-                        let out = '';
+                        let outMenuTabs = '';
+                        let outCards1 = '';
+                        let outCards2 = '';
+                        let outCards3 = '';
                         for (var idx in menu_list) {
                             if (menu_list[idx].flg == 0) {
-                                out += '<div class="col">';
-                                out += '<div class="card mb-4 shadow-sm">';
                                 if (menu_list[idx].menu_id > 30000) {
-                                    out += '<div class="card-header text-white bg-primary">';
+                                    if (menu_list[idx].menu_id == 30001) {
+                                        outMenuTabs += '<li role="presentation" class="nav-item"><a href="#menu30000" aria-controls="menu30000" role="tab" data-toggle="tab" class="nav-link">30000～</a></li>';
+                                        outCards2 += '</div>';
+                                        outCards2 += '</div>';
+                                        outCards3 += '<div role="tabpanel" class="tab-pane active fade show" id="menu30000">';
+                                        outCards3 += '<div class="row row-cols-1 row-cols-md-4 mb-4 text-center" id="menu_list_card30000">';
+                                    }
+                                    outCards3 += '<div class="col">';
+                                    outCards3 += '<div class="card mb-4 shadow-sm">';
+                                    outCards3 += '<div class="card-header text-white bg-primary">';
+                                    outCards3 += '<h4 class="my-0 fw-normal">' + menu_list[idx].name + '</h4>';
+                                    outCards3 += '</div>';
+                                    outCards3 += '<div class="card-body">';
+                                    outCards3 += '<h1 class="card-title pricing-card-title">￥' + menu_list[idx].price + ' </h1>';
+                                    outCards3 += '<ul class="list-unstyled mt-3 mb-4">';
+                                    outCards3 += '<li>' + menu_list[idx].remarks + '</li>';
+                                    outCards3 += '</ul>';
+                                    outCards3 += '<button type="button" class="w-100 btn btn-lg btn-warning" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\',\'' + menu_list[idx].menu_id + '\')"><strong>カートに入れる</strong></button>';
+                                    outCards3 += '</div>';
+                                    outCards3 += '</div>';
+                                    outCards3 += '</div>';
                                 } else if (menu_list[idx].menu_id > 20000) {
-                                    out += '<div class="card-header text-white bg-success">';
-                                } else {
-                                    out += '<div class="card-header text-white bg-danger">';
+                                    if (menu_list[idx].menu_id == 20001) {
+                                        outMenuTabs += '<li role="presentation" class="nav-item"><a href="#menu20000" aria-controls="menu20000" role="tab" data-toggle="tab" class="nav-link">20000～</a></li>';
+                                        outCards1 += '</div>';
+                                        outCards1 += '</div>';
+                                        outCards2 += '<div role="tabpanel" class="tab-pane active fade show" id="menu20000">';
+                                        outCards2 += '<div class="row row-cols-1 row-cols-md-4 mb-4 text-center" id="menu_list_card20000">';
+                                    }
+                                    outCards2 += '<div class="col">';
+                                    outCards2 += '<div class="card mb-4 shadow-sm">';
+                                    outCards2 += '<div class="card-header text-white bg-success">';
+                                    outCards2 += '<h4 class="my-0 fw-normal">' + menu_list[idx].name + '</h4>';
+                                    outCards2 += '</div>';
+                                    outCards2 += '<div class="card-body">';
+                                    outCards2 += '<h1 class="card-title pricing-card-title">￥' + menu_list[idx].price + ' </h1>';
+                                    outCards2 += '<ul class="list-unstyled mt-3 mb-4">';
+                                    outCards2 += '<li>' + menu_list[idx].remarks + '</li>';
+                                    outCards2 += '</ul>';
+                                    outCards2 += '<button type="button" class="w-100 btn btn-lg btn-warning" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\',\'' + menu_list[idx].menu_id + '\')"><strong>カートに入れる</strong></button>';
+                                    outCards2 += '</div>';
+                                    outCards2 += '</div>';
+                                    outCards2 += '</div>';
+                                } else if (menu_list[idx].menu_id > 10000 && menu_list[idx].menu_id < 20000) {
+                                    if (menu_list[idx].menu_id == 10001) {
+                                        outMenuTabs += '<li role="presentation" class="nav-item"><a href="#menu10000" aria-controls="menu10000" role="tab" data-toggle="tab" class="nav-link active">10000～</a></li>';
+                                        outCards1 += '<div role="tabpanel" class="tab-pane active fade show" id="menu10000">';
+                                        outCards1 += '<div class="row row-cols-1 row-cols-md-4 mb-4 text-center" id="menu_list_card10000">';
+                                    }
+                                    outCards1 += '<div class="col">';
+                                    outCards1 += '<div class="card mb-4 shadow-sm">';
+                                    outCards1 += '<div class="card-header text-white bg-danger">';
+                                    outCards1 += '<h4 class="my-0 fw-normal">' + menu_list[idx].name + '</h4>';
+                                    outCards1 += '</div>';
+                                    outCards1 += '<div class="card-body">';
+                                    outCards1 += '<h1 class="card-title pricing-card-title">￥' + menu_list[idx].price + ' </h1>';
+                                    outCards1 += '<ul class="list-unstyled mt-3 mb-4">';
+                                    outCards1 += '<li>' + menu_list[idx].remarks + '</li>';
+                                    outCards1 += '</ul>';
+                                    outCards1 += '<button type="button" class="w-100 btn btn-lg btn-warning" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\',\'' + menu_list[idx].menu_id + '\')"><strong>カートに入れる</strong></button>';
+                                    outCards1 += '</div>';
+                                    outCards1 += '</div>';
+                                    outCards1 += '</div>';
                                 }
-                                out += '<h4 class="my-0 fw-normal">' + menu_list[idx].name + '</h4>';
-                                out += '</div>';
-                                out += '<div class="card-body">';
-                                out += '<h1 class="card-title pricing-card-title">￥' + menu_list[idx].price + ' </h1>';
-                                out += '<ul class="list-unstyled mt-3 mb-4">';
-                                out += '<li>' + menu_list[idx].remarks + '</li>';
-                                out += '</ul>';
-                                out += '<button type="button" class="w-100 btn btn-lg btn-warning" onclick="addCart(\'' + menu_list[idx].name + '\',\'' + menu_list[idx].price + '\',\'' + menu_list[idx].menu_id + '\')"><strong>カートに入れる</strong></button>';
-                                out += '</div>';
-                                out += '</div>';
-                                out += '</div>';
                             }
                         }
-                        $("#menu_list_card").html(out);
+                        outCards3 += '</div>';
+                        outCards3 += '</div>';
+                        $("#menuTabs").html(outMenuTabs);
+                        $("#tabContents").html(outCards1 + outCards2 + outCards3);
                     },
                     function() {
                         console.log('error');
